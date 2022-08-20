@@ -24,8 +24,7 @@ public class ProductTester {
 			displayInventory(vectorProductos);
 		}//end else if
 		//Se cierra el escaner
-		in.close();		
-		
+		in.close();			
 	}//end main
 	
 	//execute menu method
@@ -50,10 +49,8 @@ public class ProductTester {
 		case 4:
 			System.out.println("");
 			discontinueInventory(vectorProductos, in);
-			break;
-			
-		}//end switch
-		
+			break;			
+		}//end switch		
 	}//end execute menu method
 	
 	//main menu method
@@ -110,8 +107,7 @@ public class ProductTester {
 			}//end catch
 			
 		}while(productChoice<0||productChoice>vectorProductos.length);	
-		//end Do-While
-		
+		//end Do-While		
 		return productChoice;
 	}//end getProductNumber
 	
@@ -140,7 +136,7 @@ public class ProductTester {
 		}while(updateValue<0);
 		//end do-while		
 	}//end addInventory
-	
+		
 	//reduct inventory to selected product
 	private static void deductInventory(Producto vectorProductos[], Scanner in) {
 		int productChoice, updateValue=-1;
@@ -187,24 +183,89 @@ public class ProductTester {
 	//metodo para agregar productos al vector 
 	public static void addToInventory(Producto[] vectorProductos, Scanner in) {
 		for (int i=0; i<vectorProductos.length; i++) {
-			int tempNumber=0, tempQty=0, tempPrice=0;
-			String tempName;
-			//in.next();//Siempre que se introduzca un tipo de dato diferente al anterior se debe ingresar esto		
-			//Se pide ingresar los datos
-			System.out.println("Ingrese el Nombre del producto: ");
-			tempName=in.next();
-			System.out.println("Ingrese el precio del producto: ");
-			tempPrice=in.nextInt();
-			System.out.println("Ingrese la cantidad en stock: ");
-			tempQty=in.nextInt();
-			System.out.println("Ingrese el codigo del producto: ");
-			tempNumber=in.nextInt();
-			//Para cada posicion dle vector se crea un producto y se le asignan valores				
-			vectorProductos[i]=new Producto(tempName, tempPrice, tempQty, tempNumber);			
+			int stockChoice=-1;
+			
+			try {
+				System.out.println("1. CD" 
+						+ "\n2. DVD"
+						+ "\nPlease enter the produtc type. ");
+				stockChoice = in.nextInt();
+				
+				if(stockChoice <1 || stockChoice >2) {
+					System.out.println("Only numbers 1 or 2 allowed!");
+					i--;
+				}else if(stockChoice==1) {
+					addCDToInventory(vectorProductos, in, i);
+				}else {
+					addDVDToInventory(vectorProductos, in, i);
+				}
+				
+			}catch(Exception e) {
+				System.out.println("Entrada invalida!!");
+				i--;				
+			}//end try-catch
+
 			System.out.println("Ingreso correcto");
 		}//end for
 	}//end addToInventory
 	
+	//metodo para agregar CD productos al vector 
+	public static void addCDToInventory(Producto[] vectorProductos, Scanner in, int i) {
+		//for (int i=0; i<vectorProductos.length; i++) {
+			int tempNumber=0, tempQty=0, tempPrice=0, tempNumCanciones=0;
+			String tempName, tempArtista, tempDiscografia;
+			//in.next();//Siempre que se introduzca un tipo de dato diferente al anterior se debe ingresar esto		
+			//Se pide ingresar los datos
+			System.out.println("Ingrese el Nombre del producto: ");
+			tempName=in.next();
+			System.out.println("Ingrese el Artista del CD: ");
+			tempArtista=in.next();
+			System.out.println("Ingrese la discografia: ");
+			tempDiscografia=in.next();
+			System.out.println("Ingrese el numero de canciones: ");
+			tempNumCanciones=in.nextInt();
+			System.out.println("Ingrese la cantidad en stock: ");
+			tempQty=in.nextInt();
+			System.out.println("Ingrese el precio del producto: ");
+			tempPrice=in.nextInt();
+			System.out.println("Ingrese el codigo del producto: ");
+			tempNumber=in.nextInt();
+			
+			//Para cada posicion dle vector se crea un producto y se le asignan valores				
+			vectorProductos[i]=new CD(tempName, tempArtista, tempDiscografia, tempNumCanciones, tempQty, tempPrice, tempNumber);			
+			System.out.println("Ingreso correcto");
+		//}//end for
+	}//end addCDToInventory
+	
+	//metodo para agregar DVD productos al vector 
+	public static void addDVDToInventory(Producto[] vectorProductos, Scanner in, int i) {
+		//for (int i=0; i<vectorProductos.length; i++) {
+			int tempNumber=0, tempQty=0, tempPrice=0, tempDuracion=0, tempEdad;
+			String tempName, tempEstudio;
+			//in.next();//Siempre que se introduzca un tipo de dato diferente al anterior se debe ingresar esto		
+			//Se pide ingresar los datos
+			System.out.println("Ingrese el Nombre del producto: ");
+			tempName=in.next();
+			System.out.println("Ingrese el estudio de grabacion: ");
+			tempEstudio=in.next();
+			System.out.println("Ingrese clasificacion de edad: ");
+			tempEdad=in.nextInt();
+			System.out.println("Ingrese duracion en minutos: ");
+			tempDuracion=in.nextInt();
+			System.out.println("Ingrese la cantidad en stock: ");
+			tempQty=in.nextInt();
+			System.out.println("Ingrese el precio del producto: ");
+			tempPrice=in.nextInt();
+			System.out.println("Ingrese el codigo del producto: ");
+			tempNumber=in.nextInt();
+			
+			//Para cada posicion dle vector se crea un producto y se le asignan valores				
+			vectorProductos[i]=new DVD(tempName, tempEstudio, tempEdad, tempDuracion, tempQty, tempPrice, tempNumber);			
+			System.out.println("Ingreso correcto");
+		//}//end for
+	}//end addDVDToInventory
+	
+	//pedir la cantidad de productos a ingresar
 	static int getNumbProducts(Scanner in){
 		int maxSize=-1; //longitud del vector
 		do {			
